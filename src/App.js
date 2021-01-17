@@ -41,15 +41,7 @@ function App() {
             <Route exact path="/">
               <LogIn login={login} />
               <p>{error}</p>
-              <h3>Hejsa, hvis du ikke er Lukas, så velkommen:</h3>
-                  <p>Dette er velkomstsiden til vores startcode.<br/>
-                  Log ind som user/testuser eller admin/testadmin.<br/>
-                  Som user og admin kan man tilgå begge brugerheadere.<br/>
-                  Afhængigt af hvilken rolle man har, får man fremvist en<br/>
-                  besked, der fortæller om man er logget ind som bruger eller admin.<br/><br/>
-                  Man kan tilgå Starwars-route uanset om man er logget ind.<br/>
-                  Komponentet fetcher fra swapi.com, fra fem forskellige endpoints. Et for hver linje.<br/>
-                </p>
+              
             </Route>
           </div>
         ) : (

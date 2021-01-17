@@ -49,12 +49,21 @@ function apiFacade() {
     return role;
   };
 
+  const getUserName = () => {
+    let myToken = getToken();
+    let tokenData = myToken.split(".")[1];
+    let decoedeJsonData = window.atob(tokenData);
+    let decodedJwtData = JSON.parse(decoedeJsonData);
+    let userName = decodedJwtData.username;
+
+    return userName;
+  };
   const fetchData = () => {
     const options = makeOptions("GET", true); //True add's the token
 
     let role = getRole();
 
-    return fetch(URL + "/api/info/" + role, options).then(handleHttpErrors);
+    return fetch(URL + "/api/books/" + role, options).then(handleHttpErrors);
   };
 
   const fetchStarwars = () => {
@@ -62,6 +71,49 @@ function apiFacade() {
 
     return fetch(URL + "/api/info/parrallel/", options).then(handleHttpErrors);
   };
+
+  const fetchAllBooks = () => {
+    const options = makeOptions("GET");
+
+    return fetch(URL + "/api/books/allbooks/", options).then(handleHttpErrors);
+  };
+
+  const fetchBookByTitle = (title) => {
+    const options = makeOptions("GET");
+
+    return fetch(URL + "/api/books/book/" + title, options).then(
+      handleHttpErrors
+    );
+  };
+
+  const loanABook = (isbn) => {
+    const options = makeOptions("PUT", true, {
+      isbn: isbn,
+      userName: getUserName(),
+    });
+
+    return fetch(URL + "/api/books/loan/", options).then(handleHttpErrors);
+  };
+
+  const addABook = (book) => {
+    const options = makeOptions("POST", true, {
+      isbn: book.isbn,
+      title: book.title,
+      authors: book.authors,
+      publisher: book.publisher,
+      publishYear: book.publishYear,
+      isAvalible: book.isAvalible,
+    });
+    return fetch(URL + "/api/books/add/", options).then(handleHttpErrors);
+  };
+
+  const removeBook = (isbn) => {
+    const options = makeOptions("DELETE", true,);
+    return fetch(URL + "/api/books/remove/" + isbn, options).then(handleHttpErrors);
+  };
+
+  
+
   const makeOptions = (method, addToken, body) => {
     var opts = {
       method: method,
@@ -87,7 +139,12 @@ function apiFacade() {
     logout,
     fetchData,
     fetchStarwars,
-    getRole
+    getRole,
+    fetchAllBooks,
+    fetchBookByTitle,
+    loanABook,
+    addABook,
+    removeBook
   };
 }
 
